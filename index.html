@@ -1,9 +1,261 @@
 <!DOCTYPE html>
-<html>
+<html lang="ar" dir="rtl">
 <head>
-  <title>My GitHub Page</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bismillah | Personal Website</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Amiri&family=Poppins:wght@300;600&display=swap');
+
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      background-color: #121018;
+      color: #e0e0e8;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background: linear-gradient(135deg, #6a00ff, #00e0ff);
+      text-align: center;
+      padding: 60px 20px;
+      color: #fff;
+      box-shadow: 0 5px 15px rgba(106, 0, 255, 0.6);
+    }
+
+    header h1 {
+      font-family: 'Amiri', serif;
+      font-size: 2.8em;
+      color: #ffffff;
+      text-shadow: 0 0 15px #00e0ff;
+      margin: 0;
+      direction: rtl;
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 8px #00e0ff; }
+      to { text-shadow: 0 0 20px #6a00ff; }
+    }
+
+    header p {
+      font-size: 1.3em;
+      opacity: 0.85;
+      margin-top: 30px;
+      font-weight: 300;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: #1e1b29;
+      border-radius: 12px;
+      box-shadow: 0 0 35px rgba(106, 0, 255, 0.7);
+      padding: 35px 40px;
+    }
+
+    section {
+      margin-bottom: 45px;
+    }
+
+    h2 {
+      border-left: 6px solid #00e0ff;
+      padding-left: 14px;
+      color: #00e0ff;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+      font-size: 1.6em;
+      margin-bottom: 18px;
+      text-shadow: 0 0 8px #00e0ffaa;
+    }
+
+    p, li {
+      line-height: 1.8;
+      font-size: 1.15em;
+      color: #d0d0e5;
+    }
+
+    ul {
+      list-style-type: square;
+      padding-left: 28px;
+    }
+
+    .info-box {
+      background: #282340;
+      padding: 22px;
+      border: 2px solid #6a00ff;
+      border-radius: 10px;
+      margin-top: 20px;
+      box-shadow: 0 0 15px #6a00ff88;
+      font-weight: 600;
+      color: #c0c0ff;
+    }
+
+    .highlight {
+      color: #ff4d94;
+      font-weight: 700;
+      text-shadow: 0 0 6px #ff4d94aa;
+    }
+
+    .share-section {
+      text-align: center;
+      margin-top: 55px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px; /* Space between buttons */
+    }
+
+    /* Updated Share Button Styles */
+    .share-button {
+      display: inline-block;
+      background-color: #6a00ff;
+      color: white;
+      padding: 18px 36px;   /* Increased padding */
+      font-size: 1.3em;     /* Bigger text */
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 0 18px #6a00ffcc;
+      min-width: 220px;     /* Wider buttons */
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .share-button:hover {
+      background-color: #4a00cc;
+      transform: translateY(-4px);
+      box-shadow: 0 0 25px #ff4d94;
+    }
+
+    /* Responsive Buttons */
+    @media (max-width: 650px) {
+      .share-button {
+        min-width: 80%;      /* Nearly full width on mobile */
+      }
+    }
+
+    footer {
+      text-align: center;
+      background: #1c1830;
+      color: #8888aa;
+      padding: 22px;
+      margin-top: 55px;
+      border-top: 1px solid #3a2f60;
+      font-weight: 500;
+      font-size: 0.95em;
+      letter-spacing: 0.03em;
+    }
+
+    /* Smooth fade-in animation */
+    * {
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* LTR class for English sections */
+    .ltr {
+      direction: ltr;
+      text-align: left;
+    }
+  </style>
 </head>
 <body>
-  <h1>Hello, GitHub Pages!</h1>
+
+  <header>
+    <h1>بِسْمِ ٱللّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</h1>
+    <p>Intermediate Student • Future Developer</p>
+  </header>
+
+  <div class="container">
+
+    <section id="about" class="ltr">
+      <h2>About Me</h2>
+      <p>
+        Asalm-o-alaikum! I'm <span class="highlight">Ahmar Moeed</span>, an <span class="highlight">intermediate student</span> from 
+        <strong>Lahore, Pakistan</strong>. I’m deeply passionate about coding and technology. 
+        My dream is to become a skilled <span class="highlight">Python developer</span> and learn other programming languages 
+        that have strong demand in today’s tech market.
+      </p>
+      <div class="info-box">
+        <p><strong>📍 Location:</strong> Lahore, Pakistan</p>
+        <p><strong>📱 WhatsApp:</strong> <a href="https://wa.me/923177480949" target="_blank" style="color: #ff4d94; text-decoration: none;">Click Here!</a> for contacting me.</p>
+        <p><strong>🎯 Goal:</strong> To become a professional and successful software developer.</p>
+      </div>
+    </section>
+
+    <section id="learning" class="ltr">
+      <h2>Learning Journey</h2>
+      <p>
+        I’m currently learning <span class="highlight">Python</span> and exploring web development.  
+        I love solving problems, experimenting with code, and building new things.  
+        Every day is a new chance to grow, and I believe <em>learning never stops</em>.
+        I'm also learning about <span class="highlight">Data Science</span> and <span class="highlight">Machine Learning</span> to expand my knowledge in the tech field.
+      </p>
+    </section>
+
+    <section id="hobbies" class="ltr">
+      <h2>My Interests & Hobbies</h2>
+      <ul>
+        <li>🎮 Playing games to relax and sharpen my mind</li>
+        <li>📘 Studying and learning about technology</li>
+        <li>🏏 Playing and watching cricket — my favorite sport</li>
+        <li>💻 Exploring new coding projects and creative ideas</li>
+      </ul>
+    </section>
+
+    <section id="inspiration" class="ltr">
+      <h2>My Inspiration</h2>
+      <p>
+        My biggest idol are my <strong>Parents</strong>. My father <span class="highlight">KHURAM MOEED</span>, his hard work and motivation inspire me every day 
+        to stay focused and never give up on my goals. My supporter is my <strong>Big Brother</strong> <span class="highlight">M.AHAD MOEED</span>, who always guides me in the right direction. I want to become like my <strong>Grand Father</strong> <span class="highlight">Muhammad Moeed Chauhdary</span>, who was a great person in our family.
+      </p>
+    </section>
+
+    <section id="fun-facts" class="ltr">
+      <h2>More About Me</h2>
+      <ul>
+        <li>I'm also a <strong>Hafiz-e-Quran</strong>, who wants to fulfill his parents' dream.</li>
+        <li>I love <strong>challenges</strong> that push me to think differently.</li>
+        <li>I believe success comes from <strong>patience</strong> and <strong>consistency</strong>.</li>
+        <li>I’m excited to build <strong>real-world projects</strong> and grow as a developer.</li>
+        <li>I enjoy <strong>collaborating</strong> with others and learning from different perspectives.</li>
+        <li>I’m always open to <strong>new opportunities</strong> that help me improve my skills.</li>
+        <li>I believe in <strong>giving back</strong> to the community through knowledge sharing.</li>
+      </ul>
+    </section>
+
+    <div class="share-section ltr">
+      <a
+        class="share-button"
+        href="https://twitter.com/intent/tweet?text=Check%20out%20this%20personal%20page!%20https%3A%2F%2Fahmarmoeed.github.io%2Fpersonal-site%2F"
+        target="_blank"
+        >Share on X (Twitter)</a>
+
+      <a
+        class="share-button"
+        href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fahmarmoeed.github.io%2Fpersonal-site%2F"
+        target="_blank"
+        >Share on Facebook</a>
+
+      <a
+        class="share-button"
+        href="https://wa.me/?text=Check%20out%20this%20website:%20https%3A%2F%2Fahmarmoeed.github.io%2Fpersonal-site%2F"
+        target="_blank"
+        >Share on WhatsApp</a>
+    </div>
+  </div>
+
+  <footer class="ltr">
+    <p>© 2025 | Ahmar Moeed | ALL RIGHTS RESERVED</p>
+  </footer>
+
 </body>
 </html>
