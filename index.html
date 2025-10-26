@@ -3,16 +3,82 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Bismillah | Personal Website</title>
+  <title>MyBlog | Personal Website</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Amiri&family=Poppins:wght@300;600&display=swap');
 
+    /* 🔹 LOADING SCREEN */
+    #loading-screen {
+      position: fixed;
+      inset: 0;
+      background-color: #0e0e0e;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 1s ease, visibility 1s ease;
+    }
+
+    #loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loading-title {
+      font-size: clamp(2rem, 7vw, 4rem);
+      letter-spacing: 6px;
+      font-weight: 700;
+      user-select: none;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .loading-title span {
+      display: inline-block;
+      animation: bounce 1.2s ease-in-out infinite alternate;
+      color: #ffffff;
+    }
+
+    /* Slight bounce for each letter */
+    .loading-title span:nth-child(1) { animation-delay: 0s; }
+    .loading-title span:nth-child(2) { animation-delay: 0.1s; }
+    .loading-title span:nth-child(3) { animation-delay: 0.2s; }
+    .loading-title span:nth-child(4) { animation-delay: 0.3s; }
+    .loading-title span:nth-child(5) { animation-delay: 0.4s; }
+    .loading-title span:nth-child(6) { animation-delay: 0.5s; }
+
+    @keyframes bounce {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-12px) scale(1.1); color: #00e0ff; }
+      100% { transform: translateY(0) scale(1); }
+    }
+
+    .loading-line {
+      width: 0%;
+      height: 4px;
+      background: linear-gradient(90deg, #ff6b6b, #feca57, #1dd1a1);
+      border-radius: 3px;
+      animation: loadLine 3s ease-in-out forwards;
+    }
+
+    @keyframes loadLine {
+      from { width: 0%; }
+      to { width: 100%; }
+    }
+
+    /* 🔹 MAIN SITE */
     body {
       font-family: 'Poppins', Arial, sans-serif;
       background-color: #121018;
       color: #e0e0e8;
       margin: 0;
       padding: 0;
+      overflow-x: hidden;
     }
 
     header {
@@ -41,7 +107,7 @@
     header p {
       font-size: 1.3em;
       opacity: 0.85;
-      margin-top: 30px;
+      margin-top: 40px;
       font-weight: 300;
       font-family: 'Poppins', sans-serif;
     }
@@ -53,10 +119,6 @@
       border-radius: 12px;
       box-shadow: 0 0 35px rgba(106, 0, 255, 0.7);
       padding: 35px 40px;
-    }
-
-    section {
-      margin-bottom: 45px;
     }
 
     h2 {
@@ -77,9 +139,10 @@
       color: #d0d0e5;
     }
 
-    ul {
-      list-style-type: square;
-      padding-left: 28px;
+    .highlight {
+      color: #ff4d94;
+      font-weight: 700;
+      text-shadow: 0 0 6px #ff4d94aa;
     }
 
     .info-box {
@@ -93,34 +156,27 @@
       color: #c0c0ff;
     }
 
-    .highlight {
-      color: #ff4d94;
-      font-weight: 700;
-      text-shadow: 0 0 6px #ff4d94aa;
-    }
-
     .share-section {
       text-align: center;
       margin-top: 55px;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
-      gap: 20px; /* Space between buttons */
+      gap: 20px;
     }
 
-    /* Updated Share Button Styles */
     .share-button {
       display: inline-block;
       background-color: #6a00ff;
       color: white;
-      padding: 18px 36px;   /* Increased padding */
-      font-size: 1.3em;     /* Bigger text */
+      padding: 18px 36px;
+      font-size: 1.3em;
       border-radius: 12px;
       text-decoration: none;
       font-weight: 700;
       transition: background-color 0.3s ease, transform 0.3s ease;
       box-shadow: 0 0 18px #6a00ffcc;
-      min-width: 220px;     /* Wider buttons */
+      min-width: 220px;
       text-align: center;
       white-space: nowrap;
     }
@@ -131,11 +187,8 @@
       box-shadow: 0 0 25px #ff4d94;
     }
 
-    /* Responsive Buttons */
     @media (max-width: 650px) {
-      .share-button {
-        min-width: 80%;      /* Nearly full width on mobile */
-      }
+      .share-button { min-width: 80%; }
     }
 
     footer {
@@ -147,20 +200,8 @@
       border-top: 1px solid #3a2f60;
       font-weight: 500;
       font-size: 0.95em;
-      letter-spacing: 0.03em;
     }
 
-    /* Smooth fade-in animation */
-    * {
-      animation: fadeIn 0.6s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* LTR class for English sections */
     .ltr {
       direction: ltr;
       text-align: left;
@@ -169,14 +210,22 @@
 </head>
 <body>
 
+  <!-- 🔹 LOADING SCREEN -->
+  <div id="loading-screen">
+    <h1 class="loading-title" id="loading-title">
+      <span>M</span><span>Y</span> <span>B</span><span>L</span><span>O</span><span>G</span>
+    </h1>
+    <div class="loading-line"></div>
+  </div>
+
+  <!-- 🔹 MAIN SITE -->
   <header>
     <h1>بِسْمِ ٱللّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</h1>
     <p>Intermediate Student • Future Developer</p>
   </header>
 
-  <div class="container">
-
-    <section id="about" class="ltr">
+  <div class="container ltr">
+    <section>
       <h2>About Me</h2>
       <p>
         Asalm-o-alaikum! I'm <span class="highlight">Ahmar Moeed</span>, an <span class="highlight">intermediate student</span> from 
@@ -184,78 +233,52 @@
         My dream is to become a skilled <span class="highlight">Python developer</span> and learn other programming languages 
         that have strong demand in today’s tech market.
       </p>
-      <div class="info-box">
-        <p><strong>📍 Location:</strong> Lahore, Pakistan</p>
-        <p><strong>📱 WhatsApp:</strong> <a href="https://wa.me/923177480949" target="_blank" style="color: #ff4d94; text-decoration: none;">Click Here!</a> for contacting me.</p>
-        <p><strong>🎯 Goal:</strong> To become a professional and successful software developer.</p>
-      </div>
     </section>
-
-    <section id="learning" class="ltr">
-      <h2>Learning Journey</h2>
-      <p>
-        I’m currently learning <span class="highlight">Python</span> and exploring web development.  
-        I love solving problems, experimenting with code, and building new things.  
-        Every day is a new chance to grow, and I believe <em>learning never stops</em>.
-        I'm also learning about <span class="highlight">Data Science</span> and <span class="highlight">Machine Learning</span> to expand my knowledge in the tech field.
-      </p>
-    </section>
-
-    <section id="hobbies" class="ltr">
-      <h2>My Interests & Hobbies</h2>
-      <ul>
-        <li>🎮 Playing games to relax and sharpen my mind</li>
-        <li>📘 Studying and learning about technology</li>
-        <li>🏏 Playing and watching cricket — my favorite sport</li>
-        <li>💻 Exploring new coding projects and creative ideas</li>
-      </ul>
-    </section>
-
-    <section id="inspiration" class="ltr">
-      <h2>My Inspiration</h2>
-      <p>
-        My biggest idol are my <strong>Parents</strong>. My father <span class="highlight">KHURAM MOEED</span>, his hard work and motivation inspire me every day 
-        to stay focused and never give up on my goals. My supporter is my <strong>Big Brother</strong> <span class="highlight">M.AHAD MOEED</span>, who always guides me in the right direction. I want to become like my <strong>Grand Father</strong> <span class="highlight">Muhammad Moeed Chauhdary</span>, who was a great person in our family.
-      </p>
-    </section>
-
-    <section id="fun-facts" class="ltr">
-      <h2>More About Me</h2>
-      <ul>
-        <li>I'm also a <strong>Hafiz-e-Quran</strong>, who wants to fulfill his parents' dream.</li>
-        <li>I love <strong>challenges</strong> that push me to think differently.</li>
-        <li>I believe success comes from <strong>patience</strong> and <strong>consistency</strong>.</li>
-        <li>I’m excited to build <strong>real-world projects</strong> and grow as a developer.</li>
-        <li>I enjoy <strong>collaborating</strong> with others and learning from different perspectives.</li>
-        <li>I’m always open to <strong>new opportunities</strong> that help me improve my skills.</li>
-        <li>I believe in <strong>giving back</strong> to the community through knowledge sharing.</li>
-      </ul>
-    </section>
-
-    <div class="share-section ltr">
-      <a
-        class="share-button"
-        href="https://twitter.com/intent/tweet?text=Check%20out%20this%20personal%20page!%20https%3A%2F%2Fahmarmoeed.github.io%2Fpersonal-site%2F"
-        target="_blank"
-        >Share on X (Twitter)</a>
-
-      <a
-        class="share-button"
-        href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fahmarmoeed.github.io%2Fpersonal-site%2F"
-        target="_blank"
-        >Share on Facebook</a>
-
-      <a
-        class="share-button"
-        href="https://wa.me/?text=Check%20out%20this%20website:%20https%3A%2F%2Fahmarmoeed.github.io%2Fpersonal-site%2F"
-        target="_blank"
-        >Share on WhatsApp</a>
-    </div>
   </div>
 
   <footer class="ltr">
     <p>© 2025 | Ahmar Moeed | ALL RIGHTS RESERVED</p>
   </footer>
+
+  <script>
+    const loadingScreen = document.getElementById('loading-screen');
+    const letters = document.querySelectorAll('#loading-title span');
+
+    // Animate letters when touched or clicked
+    function animateLetters() {
+      letters.forEach(letter => {
+        const randomScale = 0.8 + Math.random() * 1.4;
+        const randomColor = `hsl(${Math.random() * 360}, 80%, 70%)`;
+        letter.style.transform = `scale(${randomScale}) rotate(${(Math.random() - 0.5) * 20}deg)`;
+        letter.style.color = randomColor;
+      });
+      setTimeout(() => {
+        letters.forEach(l => {
+          l.style.transform = "scale(1) rotate(0)";
+          l.style.color = "white";
+        });
+      }, 600);
+    }
+
+    document.addEventListener('click', animateLetters);
+    document.addEventListener('touchstart', animateLetters);
+
+    // Show loader only once per session
+    window.addEventListener('load', () => {
+      const hasSeenLoader = sessionStorage.getItem('hasSeenLoader');
+
+      if (!hasSeenLoader) {
+        // Show loader, then hide after animation
+        setTimeout(() => {
+          loadingScreen.classList.add('hidden');
+          sessionStorage.setItem('hasSeenLoader', 'true');
+        }, 3200);
+      } else {
+        // Skip loader immediately
+        loadingScreen.classList.add('hidden');
+      }
+    });
+  </script>
 
 </body>
 </html>
