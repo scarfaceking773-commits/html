@@ -1,293 +1,347 @@
-001 <!DOCTYPE html>
-002 <html lang="ar" dir="rtl">
-003 <head>
-004   <meta charset="UTF-8" />
-005   <meta name="viewport" content="width=device-width, initial-scale=1" />
-006   <title>MyBlog | Personal Website</title>
-007   <style>
-008     @import url('https://fonts.googleapis.com/css2?family=Amiri&family=Poppins:wght@300;600&display=swap');
-009
-010     /* 🔹 LOADING SCREEN */
-011     #loading-screen {
-012       position: fixed;
-013       inset: 0;
-014       background-color: #0e0e0e;
-015       color: white;
-016       display: flex;
-017       flex-direction: column;
-018       justify-content: center;
-019       align-items: center;
-020       z-index: 9999;
-021       opacity: 1;
-022       visibility: visible;
-023       transition: opacity 1s ease, visibility 1s ease;
-024     }
-025
-026     #loading-screen.hidden {
-027       opacity: 0;
-028       visibility: hidden;
-029       pointer-events: none;
-030     }
-031
-032     .loading-title {
-033       font-size: clamp(2rem, 7vw, 4rem);
-034       letter-spacing: 6px;
-035       font-weight: 700;
-036       user-select: none;
-037       text-align: center;
-038       margin-bottom: 20px;
-039     }
-040
-041     .loading-title span {
-042       display: inline-block;
-043       animation: bounce 1.2s ease-in-out infinite alternate;
-044       color: #ffffff;
-045     }
-046
-047     .loading-title span:nth-child(1) { animation-delay: 0s; }
-048     .loading-title span:nth-child(2) { animation-delay: 0.1s; }
-049     .loading-title span:nth-child(3) { animation-delay: 0.2s; }
-050     .loading-title span:nth-child(4) { animation-delay: 0.3s; }
-051     .loading-title span:nth-child(5) { animation-delay: 0.4s; }
-052     .loading-title span:nth-child(6) { animation-delay: 0.5s; }
-053
-054     @keyframes bounce {
-055       0% { transform: translateY(0); }
-056       50% { transform: translateY(-12px) scale(1.1); color: #00e0ff; }
-057       100% { transform: translateY(0) scale(1); }
-058     }
-059
-060     .loading-line {
-061       width: 0%;
-062       height: 4px;
-063       background: linear-gradient(90deg, #ff6b6b, #feca57, #1dd1a1);
-064       border-radius: 3px;
-065       animation: loadLine 7s ease-in-out forwards;
-066     }
-067
-068     @keyframes loadLine {
-069       from { width: 0%; }
-070       to { width: 100%; }
-071     }
-072
-073     /* 🔹 MAIN SITE */
-074     body {
-075       font-family: 'Poppins', Arial, sans-serif;
-076       background-color: #121018;
-077       color: #e0e0e8;
-078       margin: 0;
-079       padding: 0;
-080       overflow-x: hidden;
-081     }
-082
-083     header {
-084       background: linear-gradient(135deg, #6a00ff, #00e0ff);
-085       text-align: center;
-086       padding: 60px 20px;
-087       color: #fff;
-088       box-shadow: 0 5px 15px rgba(106, 0, 255, 0.6);
-089     }
-090
-091     header h1 {
-092       font-family: 'Amiri', serif;
-093       font-size: 2.8em;
-094       color: #ffffff;
-095       text-shadow: 0 0 15px #00e0ff;
-096       margin: 0;
-097       direction: rtl;
-098       animation: glow 3s ease-in-out infinite alternate;
-099     }
-100
-101     @keyframes glow {
-102       from { text-shadow: 0 0 8px #00e0ff; }
-103       to { text-shadow: 0 0 20px #6a00ff; }
-104     }
-105
-106     header p {
-107       font-size: 1.3em;
-108       opacity: 0.85;
-109       margin-top: 40px;
-110       font-weight: 300;
-111       font-family: 'Poppins', sans-serif;
-112     }
-113
-114     .container {
-115       max-width: 900px;
-116       margin: 40px auto;
-117       background: #1e1b29;
-118       border-radius: 12px;
-119       box-shadow: 0 0 35px rgba(106, 0, 255, 0.7);
-120       padding: 35px 40px;
-121     }
-122
-123     h2 {
-124       border-left: 6px solid #00e0ff;
-125       padding-left: 14px;
-126       color: #00e0ff;
-127       text-transform: uppercase;
-128       letter-spacing: 1.5px;
-129       font-weight: 600;
-130       font-size: 1.6em;
-131       margin-bottom: 18px;
-132       text-shadow: 0 0 8px #00e0ffaa;
-133     }
-134
-135     p, li {
-136       line-height: 1.8;
-137       font-size: 1.15em;
-138       color: #d0d0e5;
-139     }
-140
-141     .highlight {
-142       color: #ff4d94;
-143       font-weight: 700;
-144       text-shadow: 0 0 6px #ff4d94aa;
-145     }
-146
-147     .info-box {
-148       background: #282340;
-149       padding: 22px;
-150       border: 2px solid #6a00ff;
-151       border-radius: 10px;
-152       margin-top: 20px;
-153       box-shadow: 0 0 15px #6a00ff88;
-154       font-weight: 600;
-155       color: #c0c0ff;
-156     }
-157
-158     .share-section {
-159       text-align: center;
-160       margin-top: 35px;
-161       display: flex;
-162       justify-content: center;
-163       flex-wrap: wrap;
-164       gap: 20px;
-165     }
-166
-167     .share-button {
-168       display: inline-block;
-169       background-color: #6a00ff;
-170       color: white;
-171       padding: 14px 28px;
-172       font-size: 1.1em;
-173       border-radius: 12px;
-174       text-decoration: none;
-175       font-weight: 700;
-176       transition: background-color 0.3s ease, transform 0.3s ease;
-177       box-shadow: 0 0 18px #6a00ffcc;
-178       min-width: 160px;
-179       text-align: center;
-180       white-space: nowrap;
-181     }
-182
-183     .share-button:hover {
-184       background-color: #4a00cc;
-185       transform: translateY(-4px);
-186       box-shadow: 0 0 25px #ff4d94;
-187     }
-188
-189     @media (max-width: 650px) {
-190       .share-button { min-width: 80%; }
-191     }
-192
-193     footer {
-194       text-align: center;
-195       background: #1c1830;
-196       color: #8888aa;
-197       padding: 22px;
-198       margin-top: 55px;
-199       border-top: 1px solid #3a2f60;
-200       font-weight: 500;
-201       font-size: 0.95em;
-202     }
-203
-204     .ltr {
-205       direction: ltr;
-206       text-align: left;
-207     }
-208   </style>
-209 </head>
-210 <body>
-211
-212   <!-- 🔹 LOADING SCREEN -->
-213   <div id="loading-screen">
-214     <h1 class="loading-title" id="loading-title">
-215       <span>G</span><span>L</span><span>O</span><span>B</span> <span>Y</span><span>M</span>
-216     </h1>
-217     <div class="loading-line"></div>
-218   </div>
-219
-220   <!-- 🔹 HEADER -->
-221   <header>
-222     <h1>بِسْمِ ٱللّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</h1>
-223     <p>Intermediate Student • Future Developer</p>
-224   </header>
-225
-226   <!-- 🔹 MAIN CONTENT -->
-227   <div class="container ltr">
-228     <section id="about">
-229       <h2>About Me</h2>
-230       <p>
-231         Asalm-o-alaikum! I'm <span class="highlight">Ahmar Moeed</span>, an <span class="highlight">intermediate student</span> from 
-232         <strong>Lahore, Pakistan</strong>. I’m deeply passionate about coding and technology. 
-233         My dream is to become a skilled <span class="highlight">Python developer</span> and learn other programming languages 
-234         that have strong demand in today’s tech market.
-235       </p>
-236       <div class="info-box">
-237         <p><strong>📍 Location:</strong> Lahore, Pakistan</p>
-238         <p><strong>📱 WhatsApp:</strong> <a href="https://wa.me/923177480949" target="_blank">Click Here!</a></p>
-239         <p><strong>🎯 Goal:</strong> To become a professional and successful software developer.</p>
-240       </div>
-241     </section>
-242
-243     <section id="learning">
-244       <h2>Learning Journey</h2>
-245       <p>
-246         I’m currently learning <span class="highlight">Python</span> and exploring web development.  
-247         I love solving problems, experimenting with code, and building new things.  
-248         Every day is a new chance to grow, and I believe <em>learning never stops</em>.
-249         I'm also learning about <span class="highlight">Data Science</span> and <span class="highlight">Machine Learning</span> to expand my knowledge in the tech field.
-250       </p>
-251     </section>
-252
-253     <section id="hobbies">
-254       <h2>My Interests & Hobbies</h2>
-255       <ul>
-256         <li>🎮 Playing games to relax and sharpen my mind</li>
-257         <li>📘 Studying and learning about technology</li>
-258         <li>🏏 Playing and watching cricket — my favorite sport</li>
-259         <li>💻 Exploring new coding projects and creative ideas</li>
-260       </ul>
-261     </section>
-262
-263     <section id="inspiration">
-264       <h2>My Inspiration</h2>
-265       <p>
-266         My biggest idol are my <strong>Parents</strong>. My father <span class="highlight">KHURAM MOEED</span>, his hard work and motivation inspire me every day 
-267         to stay focused and never give up on my goals. My supporter is my <strong>Big Brother</strong> <span class="highlight">M.AHAD MOEED</span>, who always guides me in the right direction. I want to become like my <strong>Grand Father</strong> <span class="highlight">Muhammad Moeed Chauhdary</span>, who was a great person in our family.
-268       </p>
-269     </section>
-270
-271     <section id="fun-facts">
-272       <h2>More About Me</h2>
-273       <ul>
-274         <li>I'm also a <strong>Hafiz-e-Quran</strong>, who wants to fulfill his parents' dream.</li>
-275         <li>I love <strong>challenges</strong> that push me to think differently.</li>
-276         <li>I believe success comes from <strong>patience</strong> and <strong>consistency</strong>.</li>
-277         <li>I’m excited to build <strong>real-world projects</strong> and grow as a developer.</li>
-278         <li>I enjoy <strong>collaborating</strong> with others and learning from different perspectives.</li>
-279         <li>I’m always open to <strong>new opportunities</strong> that help me improve my skills.</li>
-280         <li>I believe in <strong>giving back</strong> to the community through knowledge sharing.</li>
-281       </ul>
-282     </section>
-283
-284     <!-- 🔹 SHARE BUTTONS -->
-285     <section id="share">
-286       <h2>Share My Profile</h2>
-287       <div class="share-section">
-       <a class="share-button" href="https://wa.me/923177480949" target="_blank">WhatsApp</a>
-        <a class="share-button" href="https://www.facebook.com/sharer/sharer.php?u=YOUR_WEBSITE_URL" target="_blank">
 
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MyBlog | Personal Website</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Amiri&family=Poppins:wght@300;600&display=swap');
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      background-color: #121018;
+      color: #e0e0e8;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ===== Navigation Bar ===== */
+    nav {
+      background: #1e1b29;
+      text-align: center;
+      padding: 14px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 0 15px rgba(106, 0, 255, 0.5);
+    }
+
+    nav a {
+      color: #00e0ff;
+      text-decoration: none;
+      margin: 0 18px;
+      font-weight: 600;
+      transition: color 0.3s ease;
+      letter-spacing: 0.6px;
+    }
+
+    nav a:hover {
+      color: #ff4d94;
+    }
+
+    header {
+      background: linear-gradient(135deg, #6a00ff, #00e0ff);
+      text-align: center;
+      padding: 60px 20px;
+      color: #fff;
+      box-shadow: 0 5px 15px rgba(106, 0, 255, 0.6);
+    }
+
+    header h1 {
+      font-family: 'Amiri', serif;
+      font-size: 2.8em;
+      color: #ffffff;
+      text-shadow: 0 0 15px #00e0ff;
+      margin: 0;
+      direction: rtl;
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 8px #00e0ff; }
+      to { text-shadow: 0 0 20px #6a00ff; }
+    }
+
+    header p {
+      font-size: 1.3em;
+      opacity: 0.85;
+      margin-top: 40px;
+      font-weight: 300;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 40px auto;
+      background: #1e1b29;
+      border-radius: 12px;
+      box-shadow: 0 0 35px rgba(106, 0, 255, 0.7);
+      padding: 35px 40px;
+    }
+
+    section {
+      margin-bottom: 45px;
+      transition: background 0.3s ease;
+      border-radius: 10px;
+    }
+
+    section:hover {
+      background: #232038;
+    }
+
+    h2 {
+      border-left: 6px solid #00e0ff;
+      padding-left: 14px;
+      color: #00e0ff;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-weight: 600;
+      font-size: 1.6em;
+      margin-bottom: 18px;
+      text-shadow: 0 0 8px #00e0ffaa;
+    }
+
+    p, li {
+      line-height: 1.8;
+      font-size: 1.15em;
+      color: #d0d0e5;
+    }
+
+    ul {
+      list-style-type: square;
+      padding-left: 28px;
+    }
+
+    .info-box {
+      background: #282340;
+      padding: 22px;
+      border: 2px solid #6a00ff;
+      border-radius: 10px;
+      margin-top: 20px;
+      box-shadow: 0 0 15px #6a00ff88;
+      font-weight: 600;
+      color: #c0c0ff;
+    }
+
+    .highlight {
+      color: #ff4d94;
+      font-weight: 700;
+      text-shadow: 0 0 6px #ff4d94aa;
+    }
+
+    a {
+      color: #00e0ff;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    a:hover {
+      color: #ff4d94;
+    }
+
+    .share-section {
+      text-align: center;
+      margin-top: 55px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .share-button {
+      display: inline-block;
+      background-color: #6a00ff;
+      color: white;
+      padding: 18px 36px;
+      font-size: 1.3em;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 700;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 0 18px #6a00ffcc;
+      min-width: 220px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    .share-button:hover {
+      background-color: #4a00cc;
+      transform: translateY(-4px);
+      box-shadow: 0 0 25px #ff4d94;
+    }
+
+    @media (max-width: 650px) {
+      .share-button {
+        min-width: 80%;
+      }
+    }
+
+    footer {
+      text-align: center;
+      background: #1c1830;
+      color: #8888aa;
+      padding: 22px;
+      margin-top: 55px;
+      border-top: 1px solid #3a2f60;
+      font-weight: 500;
+      font-size: 0.95em;
+      letter-spacing: 0.03em;
+    }
+
+    /* Back to Top Button */
+    #backToTop {
+      display: none;
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background-color: #6a00ff;
+      color: white;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 50%;
+      cursor: pointer;
+      box-shadow: 0 0 20px #6a00ffbb;
+      transition: transform 0.3s ease, background 0.3s ease;
+      font-size: 1.4em;
+      z-index: 999;
+    }
+
+    #backToTop:hover {
+      background-color: #ff4d94;
+      transform: translateY(-4px);
+      box-shadow: 0 0 25px #ff4d94aa;
+    }
+
+    /* Fade-in animation */
+    * {
+      animation: fadeIn 0.6s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .ltr {
+      direction: ltr;
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>بِسْمِ ٱللّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</h1>
+    <p>Intermediate Student • Future Developer</p>
+  </header>
+
+  <!-- Navigation Bar -->
+  <nav class="ltr">
+    <a href="#about">About</a>
+    <a href="#learning">Learning</a>
+    <a href="#hobbies">Hobbies</a>
+    <a href="#inspiration">Inspiration</a>
+    <a href="#fun-facts">More</a>
+  </nav>
+
+  <div class="container">
+
+    <section id="about" class="ltr">
+      <h2>About Me</h2>
+      <p>
+        Asalm-o-alaikum! I'm <span class="highlight">Ahmar Moeed</span>, an <span class="highlight">intermediate student</span> from 
+        <strong>Lahore, Pakistan</strong>. I’m deeply passionate about coding and technology. 
+        My dream is to become a skilled <span class="highlight">Python developer</span> and learn other programming languages 
+        that have strong demand in today’s tech market.
+      </p>
+      <div class="info-box">
+        <p><strong>📍 Location:</strong> Lahore, Pakistan</p>
+        <p><strong>📱 WhatsApp:</strong> <a href="https://wa.me/923177480949" target="_blank">Click Here!</a> for contacting me.</p>
+        <p><strong>🎯 Goal:</strong> To become a professional and successful software developer.</p>
+      </div>
+    </section>
+
+    <section id="learning" class="ltr">
+      <h2>Learning Journey</h2>
+      <p>
+        I’m currently learning <span class="highlight">Python</span> and exploring web development.  
+        I love solving problems, experimenting with code, and building new things.  
+        Every day is a new chance to grow, and I believe <em>learning never stops</em>.
+        I'm also learning about <span class="highlight">Data Science</span> and <span class="highlight">Machine Learning</span> to expand my knowledge in the tech field.
+      </p>
+    </section>
+
+    <section id="hobbies" class="ltr">
+      <h2>My Interests & Hobbies</h2>
+      <ul>
+        <li>🎮 Playing games to relax and sharpen my mind</li>
+        <li>📘 Studying and learning about technology</li>
+        <li>🏏 Playing and watching cricket — my favorite sport</li>
+        <li>💻 Exploring new coding projects and creative ideas</li>
+      </ul>
+    </section>
+
+    <section id="inspiration" class="ltr">
+      <h2>My Inspiration</h2>
+      <p>
+        My biggest idol are my <strong>Parents</strong>. My father <span class="highlight">KHURAM MOEED</span>, his hard work and motivation inspire me every day 
+        to stay focused and never give up on my goals. My supporter is my <strong>Big Brother</strong> <span class="highlight">M.AHAD MOEED</span>, who always guides me in the right direction. I want to become like my <strong>Grand Father</strong> <span class="highlight">Muhammad Moeed Chauhdary</span>, who was a great person in our family.
+      </p>
+    </section>
+
+    <section id="fun-facts" class="ltr">
+      <h2>More About Me</h2>
+      <ul>
+        <li>I'm also a <strong>Hafiz-e-Quran</strong>, who wants to fulfill his parents' dream.</li>
+        <li>I love <strong>challenges</strong> that push me to think differently.</li>
+        <li>I believe success comes from <strong>patience</strong> and <strong>consistency</strong>.</li>
+        <li>I’m excited to build <strong>real-world projects</strong> and grow as a developer.</li>
+        <li>I enjoy <strong>collaborating</strong> with others and learning from different perspectives.</li>
+        <li>I’m always open to <strong>new opportunities</strong> that help me improve my skills.</li>
+        <li>I believe in <strong>giving back</strong> to the community through knowledge sharing.</li>
+      </ul>
+    </section>
+
+    <div class="share-section ltr">
+      <a class="share-button" href="https://twitter.com/intent/tweet?text=Check%20out%20this%20personal%20page!%20https%3A%2F%2Fahmarmoeed.github.io%2Fpersonal-site%2F" target="_blank">Share on X (Twitter)</a>
+      <a class="share-button" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fahmarmoeed.github.io%2Fpersonal-site%2F" target="_blank">Share on Facebook</a>
+      <a class="share-button" href="https://wa.me/?text=Check%20out%20this%20website:%20https%3A%2F%2Fahmarmoeed.github.io%2Fpersonal-site%2F" target="_blank">Share on WhatsApp</a>
+    </div>
+  </div>
+
+  <!-- Back to Top Button -->
+  <button id="backToTop" title="Go to top">↑</button>
+
+  <footer class="ltr">
+    <p>© 2025 | Ahmar Moeed | ALL RIGHTS RESERVED</p>
+  </footer>
+
+  <script>
+    // Show or hide Back to Top button
+    const backToTop = document.getElementById("backToTop");
+    window.onscroll = function() {
+      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
+        backToTop.style.display = "block";
+      } else {
+        backToTop.style.display = "none";
+      }
+    };
+
+    // Scroll to top
+    backToTop.onclick = function() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+  </script>
+
+</body>
+</html>
 
 
 
