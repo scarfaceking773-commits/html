@@ -1,7 +1,5 @@
-
-
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="ltr">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -10,9 +8,7 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Amiri&family=Poppins:wght@300;600&display=swap');
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Poppins', Arial, sans-serif;
@@ -20,6 +16,60 @@
       color: #e0e0e8;
       margin: 0;
       padding: 0;
+      overflow-x: hidden;
+    }
+
+    /* ===== Loading Page ===== */
+    #loading-screen {
+      position: fixed;
+      inset: 0;
+      background-color: #121018;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 10000;
+      transition: opacity 1s ease, visibility 1s ease;
+    }
+
+    #loading-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loading-title {
+      font-size: 2.4em;
+      color: #00e0ff;
+      text-shadow: 0 0 10px #6a00ff;
+      font-weight: 700;
+      letter-spacing: 2px;
+      cursor: pointer;
+      transition: transform 0.4s ease, color 0.4s ease;
+      margin-bottom: 20px;
+    }
+
+    .loading-line {
+      width: 0;
+      height: 3px;
+      background: linear-gradient(90deg, #6a00ff, #00e0ff);
+      border-radius: 5px;
+      animation: loadLine 4s ease-out forwards; /* doubled time */
+    }
+
+    @keyframes loadLine {
+      to { width: 180px; }
+    }
+
+    .loading-title.pop {
+      animation: popup 0.5s ease;
+      color: #ff4d94;
+    }
+
+    @keyframes popup {
+      0% { transform: scale(1); }
+      40% { transform: scale(1.4); }
+      70% { transform: scale(0.9); }
+      100% { transform: scale(1); }
     }
 
     /* ===== Navigation Bar ===== */
@@ -31,6 +81,7 @@
       top: 0;
       z-index: 100;
       box-shadow: 0 0 15px rgba(106, 0, 255, 0.5);
+      transition: background 0.3s ease;
     }
 
     nav a {
@@ -38,12 +89,13 @@
       text-decoration: none;
       margin: 0 18px;
       font-weight: 600;
-      transition: color 0.3s ease;
+      transition: color 0.3s ease, transform 0.3s ease;
       letter-spacing: 0.6px;
     }
 
     nav a:hover {
       color: #ff4d94;
+      transform: translateY(-2px);
     }
 
     header {
@@ -176,25 +228,21 @@
       box-shadow: 0 0 25px #ff4d94;
     }
 
-    @media (max-width: 650px) {
-      .share-button {
-        min-width: 80%;
-      }
-    }
-
     footer {
       text-align: center;
       background: #1c1830;
       color: #8888aa;
-      padding: 22px;
+      padding: 14px;
       margin-top: 55px;
       border-top: 1px solid #3a2f60;
       font-weight: 500;
-      font-size: 0.95em;
+      font-size: 0.85em;
       letter-spacing: 0.03em;
+      transition: all 0.3s ease;
     }
 
-    /* Back to Top Button */
+    footer:hover { color: #b0b0d0; }
+
     #backToTop {
       display: none;
       position: fixed;
@@ -218,24 +266,17 @@
       box-shadow: 0 0 25px #ff4d94aa;
     }
 
-    /* Fade-in animation */
-    * {
-      animation: fadeIn 0.6s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(12px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .ltr {
-      direction: ltr;
-      text-align: left;
-    }
+    .ltr { direction: ltr; text-align: left; }
   </style>
 </head>
 
 <body>
+
+  <!-- Loading Page -->
+  <div id="loading-screen">
+    <div class="loading-title" id="loading-title">MY BLOG</div>
+    <div class="loading-line"></div>
+  </div>
 
   <header>
     <h1>بِسْمِ ٱللّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</h1>
@@ -316,7 +357,6 @@
     </div>
   </div>
 
-  <!-- Back to Top Button -->
   <button id="backToTop" title="Go to top">↑</button>
 
   <footer class="ltr">
@@ -324,24 +364,31 @@
   </footer>
 
   <script>
-    // Show or hide Back to Top button
+    // Back to top button logic
     const backToTop = document.getElementById("backToTop");
     window.onscroll = function() {
-      if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-        backToTop.style.display = "block";
-      } else {
-        backToTop.style.display = "none";
-      }
+      backToTop.style.display = (document.documentElement.scrollTop > 200) ? "block" : "none";
     };
+    backToTop.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    // Scroll to top
-    backToTop.onclick = function() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
+    // Loading screen fade out
+    window.addEventListener("load", () => {
+      setTimeout(() => {
+        document.getElementById("loading-screen").classList.add("hidden");
+      }, 4000); // doubled animation time
+    });
+
+    // Popup animation on click/tap
+    const loadingTitle = document.getElementById("loading-title");
+    document.addEventListener("click", () => {
+      loadingTitle.classList.add("pop");
+      setTimeout(() => loadingTitle.classList.remove("pop"), 600);
+    });
   </script>
 
 </body>
 </html>
+
 
 
 
